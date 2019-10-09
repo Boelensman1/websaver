@@ -2,7 +2,10 @@ import { join, resolve } from 'path'
 import { run, scrapeToDir, Log, LogEntries } from '.'
 
 export default class WebSaver {
-  constructor(public baseDirectory: string = 'out') {}
+  constructor(
+    public baseDirectory: string = 'out',
+    public zpaq: string = 'zpaq',
+  ) {}
 
   getOutLocation(url: string): string {
     const simpleUrl = url.replace(/^http[s]?:\/\//, '').replace(/\/$/, '')
@@ -17,7 +20,7 @@ export default class WebSaver {
     const { cleanup, location } = await scrapeToDir(url)
 
     const { out } = await run(
-      'zpaq',
+      this.zpaq,
       ['a', `${resolve(join(outLocation, 'arc???????'))}`, './'],
       location,
     )
