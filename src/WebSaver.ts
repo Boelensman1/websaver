@@ -12,8 +12,12 @@ export default class WebSaver {
     return join(this.baseDirectory, encodeURIComponent(simpleUrl))
   }
 
-  async crawl(url: string): Promise<void> {
-    const outLocation = this.getOutLocation(url)
+  async crawl(url: string, outLocation?: string): Promise<void> {
+    if (!outLocation) {
+      outLocation = this.getOutLocation(url)
+    } else {
+      outLocation = join(this.baseDirectory, outLocation)
+    }
     const log = new Log(outLocation)
     await log.read()
 
