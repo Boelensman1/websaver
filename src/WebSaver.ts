@@ -28,11 +28,19 @@ export default class WebSaver {
       ['a', `${resolve(join(outLocation, 'arc???????'))}`, './'],
       location,
     )
-    const file = /^Creating .*(arc\d{7}\.zpaq) at offset/m.exec(out)[1]
+
+    let file
+    try {
+      file = /^Creating .*(arc\d{7}\.zpaq) at offset/m.exec(out)[1]
+    } catch (err) {
+      console.log(out)
+      await cleanup()
+      throw new Error('Error while reading zpaq output.')
+    }
     log.addEntry(file)
     log.write()
 
-    cleanup()
+    await cleanup()
   }
 
   async list(url: string): Promise<LogEntries> {
