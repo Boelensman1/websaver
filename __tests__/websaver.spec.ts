@@ -5,9 +5,11 @@ import { join } from 'path'
 
 jest.setTimeout(300000)
 
+const zpaqLocation = process.env.zpaq || 'zpaq'
+
 it('saves a website', async () => {
   const { directory, cleanup } = await createTempDirectory()
-  const webSaver = new WebSaver(directory)
+  const webSaver = new WebSaver(directory, zpaqLocation)
   await webSaver.crawl(
     'https://www.random.org/integers/?num=1&min=1&max=6000&col=1&base=10&format=plain&rnd=new',
     'random',
