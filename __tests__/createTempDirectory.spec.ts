@@ -6,7 +6,7 @@ it('Creates a temp directory', async () => {
   const stats = await stat(directory)
 
   expect(stats.isDirectory()).toBe(true)
-  cleanup()
+  await cleanup()
   try {
     await stat(directory)
     // shouldn't get here

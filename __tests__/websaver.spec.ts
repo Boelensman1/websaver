@@ -23,5 +23,5 @@ it('saves a website', async () => {
   const log = require(join(directory, 'random', 'log.json'))
   expect(Object.keys(log)).toHaveLength(1)
   expect(Object.values(log)).toEqual(['arc0000001.zpaq'])
-  cleanup()
+  await cleanup()
 })
