@@ -7,4 +7,11 @@ it('Creates a temp directory', async () => {
 
   expect(stats.isDirectory()).toBe(true)
   cleanup()
+  try {
+    await stat(directory)
+    // shouldn't get here
+    expect(true).toBe(false)
+  } catch (err) {
+    expect(err.code).toBe('ENOENT')
+  }
 })
