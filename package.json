@@ -1,6 +1,6 @@
 {
   "name": "@boelensman1/websaver",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "websaver",
   "engines": {
     "node": ">= 10.13"

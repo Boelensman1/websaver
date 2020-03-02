@@ -7,7 +7,10 @@ interface Result {
   cleanup(): void
 }
 
-export default async function scrapeToDir(url: string): Promise<Result> {
+export default async function scrapeToDir(
+  url: string,
+  extraAllowedUrls: string[] = [],
+): Promise<Result> {
   const { directory, cleanup } = await createTempDirectory()
 
   const location = join(directory, 'scrape')
@@ -19,8 +22,16 @@ export default async function scrapeToDir(url: string): Promise<Result> {
     recursive: true,
     requestConcurrency: 5,
     urlFilter: (u: string) => {
-      // filter out external sites
-      return u.indexOf(urlOrigin) === 0
+      // filter out external sites except for extraAllowedUrls
+      if (u.indexOf(urlOrigin) === 0) {
+        return true
+      }
+      for (const extraAllowedUrl of extraAllowedUrls) {
+        if (u.indexOf(extraAllowedUrl) === 0) {
+          return true
+        }
+      }
+      return false
     },
   }
   await scrape(options)

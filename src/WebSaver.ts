@@ -12,7 +12,11 @@ export default class WebSaver {
     return join(this.baseDirectory, encodeURIComponent(simpleUrl))
   }
 
-  async crawl(url: string, outLocation?: string): Promise<void> {
+  async crawl(
+    url: string,
+    outLocation?: string,
+    extraAllowedUrls?: string[],
+  ): Promise<void> {
     if (!outLocation) {
       outLocation = this.getOutLocation(url)
     } else {
@@ -21,7 +25,7 @@ export default class WebSaver {
     const log = new Log(outLocation)
     await log.read()
 
-    const { cleanup, location } = await scrapeToDir(url)
+    const { cleanup, location } = await scrapeToDir(url, extraAllowedUrls)
 
     const { out } = await run(
       this.zpaq,
