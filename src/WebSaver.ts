@@ -16,7 +16,7 @@ export default class WebSaver {
     if (!outLocation) {
       outLocation = this.getOutLocation(url)
     } else {
-      outLocation = join(this.baseDirectory, outLocation)
+      outLocation = join(this.baseDirectory, outLocation.replace(' ', '_'))
     }
     const log = new Log(outLocation)
     await log.read()
